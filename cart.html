@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Cart - Tbilisi Trendz</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+    <!-- Header Section -->
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <a href="./welcome.html">Tbilisi Trendz</a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="welcome.html">Home</a></li>
+                <li class="dropdown">
+                    <a href="./shop.html" class="dropbtn">Shop</a>
+                    <div class="dropdown-content">
+                        <a href="./mensfashion.html">Men's Fashion</a>
+                        <a href="./womensfashion.html">Women's Fashion</a>
+                        <a href="./electronics.html">Electronics</a>
+                        <a href="./accessories.html">Accessories</a>
+                        <a href="./kids.html">Kids</a>
+                    </div>
+                </li>
+                <li><a href="./Brands.html">Brands</a></li>
+                <li><a href="./Sales.html">Sales</a></li>
+                <li><a href="./aboutus.html">About Us</a></li>
+                <li><a href="./contact.html">Contact</a></li>
+                <li><a href="./cart.html">Cart <span id="cart-count">(0)</span></a></li>
+                <li>
+                    <button id="logout-btn" style="background: red; color: white; padding: 5px 10px; border: none; cursor: pointer;">
+                        Logout
+                    </button>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Check if the user is logged in
+            const loggedInUser = JSON.parse(localStorage.getItem("user"));
+    
+            if (!loggedInUser) {
+                window.location.href = "index.html"; // Redirect to login if not logged in
+            } else {
+                // Make sure the element exists before setting its text
+                const usernameDisplay = document.getElementById("username-display");
+                if (usernameDisplay) {
+                    usernameDisplay.textContent = "Hello, " + loggedInUser.username;
+                }
+            }
+    
+            // Logout functionality
+            const logoutButton = document.getElementById("logout-btn");
+            if (logoutButton) {
+                logoutButton.addEventListener("click", function () {
+                    localStorage.removeItem("user"); // Remove user session
+                    localStorage.removeItem("isLoggedIn"); // Remove login flag
+                    window.location.href = "index.html"; // Redirect to login page
+                });
+            }
+        });
+    </script>
+    
+    <body>
+        
+
+   <!-- Cart Page Content -->
+   <section class="cart-page">
+    <h2>Your Cart</h2>
+
+    <!-- Cart Items List -->
+    <div id="cart-items" class="cart-items"></div>
+
+    <!-- Cart Summary -->
+    <div id="cart-summary">
+        <h3>Total: $<span id="total-price">0</span></h3>
+        <button id="clear-cart">Clear Cart</button>
+        <button id="checkout">Proceed to Checkout</button>
+    </div>
+</section>
+
+<!-- Footer Section -->
+<footer>
+    <p>&copy; 2025 Tbilisi Trendz - All Rights Reserved</p>
+</footer>
+
+<script>
+    // Function to load cart items from localStorage and display them
+    function loadCartItems() {
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const cartItemsDiv = document.getElementById('cart-items');
+        const totalPrice = document.getElementById('total-price');
+        cartItemsDiv.innerHTML = '';  // Clear current cart items
+
+        let total = 0;
+        cart.forEach((item, index) => {
+            const itemDiv = document.createElement('div');
+            itemDiv.classList.add('cart-item');
+            itemDiv.innerHTML = `
+                <img src="${item.image}" alt="${item.name}">
+                <h4>${item.name}</h4>
+                <p>Price: $${item.price}</p>
+                <input type="number" class="item-quantity" value="1" data-index="${index}" min="1">
+                <button class="remove-item" data-index="${index}">Remove</button>
+            `;
+            cartItemsDiv.appendChild(itemDiv);
+            total += parseFloat(item.price);
+        });
+
+        totalPrice.textContent = total.toFixed(2);
+        updateCartCount();
+    }
+
+    // Function to update cart count in the navbar
+    function updateCartCount() {
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        document.getElementById('cart-count').textContent = `(${cart.length})`;
+    }
+
+    // Function to remove an item from the cart
+    function removeFromCart(index) {
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        cart.splice(index, 1);  // Remove the item from the cart
+        localStorage.setItem('cart', JSON.stringify(cart));
+        loadCartItems();  // Reload cart items to reflect changes
+    }
+
+    // Event listener for removing items
+    document.addEventListener('click', function(event) {
+        if (event.target && event.target.classList.contains('remove-item')) {
+            const index = event.target.dataset.index;
+            removeFromCart(index);
+        }
+    });
+
+    // Event listener for changing item quantity
+    document.addEventListener('input', function(event) {
+        if (event.target && event.target.classList.contains('item-quantity')) {
+            // Get the new quantity value
+            const index = event.target.dataset.index;
+            const newQuantity = event.target.value;
+
+            // Update cart item quantity
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            cart[index].quantity = newQuantity;
+
+            // Save updated cart to localStorage
+            localStorage.setItem('cart', JSON.stringify(cart));
+            loadCartItems();  // Reload cart items
+        }
+    });
+
+    // Event listener for clearing the cart
+    document.getElementById('clear-cart').addEventListener('click', function() {
+        localStorage.removeItem('cart');  // Clear the cart from localStorage
+        loadCartItems();  // Reload cart items to reflect the empty cart
+    });
+
+    // Load cart items when the page loads
+    loadCartItems();
+</script>

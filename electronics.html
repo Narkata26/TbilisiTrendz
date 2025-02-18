@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <title>Men's Fashion</title>
+</head>
+     <!-- Header Section -->
+     <header>
+        <nav class="navbar">
+            <div class="logo">
+                <a href="./welcome.html">Tbilisi Trendz</a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="./welcome.html">Home</a></li>
+                <li class="dropdown">
+                    <a href="./shop.html" class="dropbtn">Shop</a>
+                    <div class="dropdown-content">
+                        <a href="./mensfashion.html">Men's Fashion</a>
+                        <a href="./womensfashion.html">Women's Fashion</a>
+                        <a href="./electronics.html">Electronics</a>
+                        <a href="./accessories.html">Accessories</a>
+                        <a href="./kids.html">Kids</a>
+                    </div>
+                </li>
+                <li><a href="./Brands.html">Brands</a></li>
+                <li><a href="./Sales.html">Sales</a></li>
+                <li><a href="./aboutus.html">About Us</a></li>
+                <li><a href="./contact.html">Contact</a></li>
+                <li><a href="./cart.html">Cart <span id="cart-count">(0)</span></a></li>
+                <li>
+                    <button id="logout-btn" style="background: red; color: white; padding: 5px 10px; border: none; cursor: pointer;">
+                        Logout
+                    </button>
+                </li>
+            </ul>
+            <div class="search">
+                <input type="text" placeholder="Search Products...">
+                <button>Search</button>
+            </div>
+        </nav>
+    </header>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Check if the user is logged in
+            const loggedInUser = JSON.parse(localStorage.getItem("user"));
+    
+            if (!loggedInUser) {
+                window.location.href = "index.html"; // Redirect to login if not logged in
+            } else {
+                // Make sure the element exists before setting its text
+                const usernameDisplay = document.getElementById("username-display");
+                if (usernameDisplay) {
+                    usernameDisplay.textContent = "Hello, " + loggedInUser.username;
+                }
+            }
+    
+            // Logout functionality
+            const logoutButton = document.getElementById("logout-btn");
+            if (logoutButton) {
+                logoutButton.addEventListener("click", function () {
+                    localStorage.removeItem("user"); // Remove user session
+                    localStorage.removeItem("isLoggedIn"); // Remove login flag
+                    window.location.href = "index.html"; // Redirect to login page
+                });
+            }
+        });
+    </script>
+    
+    <body>
+    
+</body>
+</html>

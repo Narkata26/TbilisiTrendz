@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Tbilisi Trendz</title>
+    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./register.css">
+</head>
+ <!-- Header Section -->
+ <header>
+    <nav class="navbar">
+        <div class="logo">
+            <a href="./welcome.html">Tbilisi Trendz</a>
+        </div>
+        <ul class="nav-links">
+            <li><a href="./welcome.html">Home</a></li>
+            <li class="dropdown">
+                <a href="./shop.html" class="dropbtn">Shop</a>
+                <div class="dropdown-content">
+                    <a href="./mensfashion.html">Men's Fashion</a>
+                    <a href="./womensfashion.html">Women's Fashion</a>
+                    <a href="./electronics.html">Electronics</a>
+                    <a href="./accessories.html">Accessories</a>
+                    <a href="./kids.html">Kids</a>
+                </div>
+            </li>
+            <li><a href="./Brands.html">Brands</a></li>
+            <li><a href="./Sales.html">Sales</a></li>
+            <li><a href="./aboutus.html">About Us</a></li>
+            <li><a href="./contact.html">Contact</a></li>
+            <li><a href="./cart.html">Cart <span id="cart-count">(0)</span></a></li>
+        </ul>
+        <div class="search">
+            <input type="text" placeholder="Search Products...">
+            <button>Search</button>
+        </div>
+    </nav>
+</header>
+<body>
+  <!-- Register Page Container -->
+  <div class="register-container">
+    <div class="register-box">
+        <h2>Sign Up</h2>
+        
+        <!-- Form Starts Here -->
+        <form id="registerForm">
+            <div class="input-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" placeholder="Enter your username" required>
+                <p class="error-message" id="usernameError"></p>
+            </div>
+
+            <div class="input-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" placeholder="Enter your email" required>
+                <p class="error-message" id="emailError"></p>
+            </div>
+
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="Create a password" required>
+                <p class="error-message" id="passwordError"></p>
+            </div>
+
+            <button type="submit">Register</button>
+
+            <div class="login-link">
+                <p>Already have an account? <a href="login.html">Login</a></p>
+            </div>
+        </form>
+        <!-- Form Ends Here -->
+    </div>
+</div>
+
+<script>
+    document.getElementById("registerForm").addEventListener("submit", function(event) {
+        event.preventDefault();
+
+        // Get input values
+        let username = document.getElementById("username").value.trim();
+        let email = document.getElementById("email").value.trim();
+        let password = document.getElementById("password").value.trim();
+        let usernameError = document.getElementById("usernameError");
+        let emailError = document.getElementById("emailError");
+        let passwordError = document.getElementById("passwordError");
+
+        // Reset errors
+        usernameError.textContent = "";
+        emailError.textContent = "";
+        passwordError.textContent = "";
+
+        // Validate inputs
+        if (username === "") {
+            usernameError.textContent = "Username is required!";
+            return;
+        }
+
+        if (email === "") {
+            emailError.textContent = "Email is required!";
+            return;
+        } else if (!email.includes("@") || !email.includes(".")) {
+            emailError.textContent = "Invalid email format!";
+            return;
+        }
+
+        if (password === "") {
+            passwordError.textContent = "Password is required!";
+            return;
+        } else if (password.length < 6) {
+            passwordError.textContent = "Password must be at least 6 characters!";
+            return;
+        }
+
+        // Store user data in localStorage (Simulating database)
+        let user = {
+            username: username,
+            email: email,
+            password: password
+        };
+
+        localStorage.setItem("user", JSON.stringify(user));
+
+        alert("Registration successful! Redirecting to login page...");
+        window.location.href = "./index.html"; // Redirect to login
+    });
+</script>
+</body>
+</html>

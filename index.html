@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tbilisi Trendz - Online Shopping Mall</title>
+    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./login.css">
+</head>
+    <!-- Header Section -->
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <a href="./welcome.html">Tbilisi Trendz</a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="./welcome.html" data-lang="home">Home</a></li>
+                <li class="dropdown">
+                    <a href="./shop.html" class="dropbtn" data-lang="shop">Shop</a>
+                    <div class="dropdown-content">
+                        <a href="./mensfashion.html" data-lang="mens_fashion">Men's Fashion</a>
+                        <a href="./womensfashion.html" data-lang="womens_fashion">Women's Fashion</a>
+                        <a href="./electronics.html" data-lang="electronics">Electronics</a>
+                        <a href="./accessories.html" data-lang="accessories">Accessories</a>
+                        <a href="./kids.html" data-lang="kids">Kids</a>
+                    </div>
+                </li>
+                <li><a href="./Brands.html" data-lang="brands">Brands</a></li>
+                <li><a href="./Sales.html" data-lang="sales">Sales</a></li>
+                <li><a href="./aboutus.html" data-lang="about">About Us</a></li>
+                <li><a href="./contact.html" data-lang="contact">Contact</a></li>
+                <li><a href="./cart.html" data-lang="cart">Cart <span id="cart-count">(0)</span></a></li>
+            </ul>
+        
+            <div class="search">
+                <input type="text" placeholder="Search Products..." data-lang-placeholder="search_placeholder">
+                <button data-lang="search">Search</button>
+            </div>
+        
+            <!-- Language Switcher -->
+            <div class="language-switcher">
+                <button class="lang-btn" onclick="changeLanguage('en')">🇬🇧 English</button>
+                <button class="lang-btn" onclick="changeLanguage('ka')">🇬🇪 ქართული</button>
+            </div>
+        </nav>
+        
+    </header>
+    <body>
+         
+    <!-- Login Page Container -->
+    <div class="login-container">
+        <div class="login-box">
+            <h2>Login</h2>
+
+            <!-- Login Form -->
+            <form id="loginForm">
+                <div class="input-group">
+                    <label for="loginUsername">Username</label>
+                    <input type="text" id="loginUsername" placeholder="Enter your username" required>
+                    <p class="error-message" id="loginUsernameError"></p>
+                </div>
+
+                <div class="input-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" placeholder="Enter your password" required>
+                    <p class="error-message" id="loginPasswordError"></p>
+                </div>
+
+                <button type="submit">Login</button>
+
+                <div class="register-link">
+                    <p>Don't have an account? <a href="register.html">Register</a></p>
+                </div>
+            </form>
+            <!-- End Login Form -->
+        </div>
+    </div>
+
+    <script>
+        document.getElementById("loginForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            // Get input values
+            let username = document.getElementById("loginUsername").value.trim();
+            let password = document.getElementById("loginPassword").value.trim();
+            let usernameError = document.getElementById("loginUsernameError");
+            let passwordError = document.getElementById("loginPasswordError");
+
+            // Reset errors
+            usernameError.textContent = "";
+            passwordError.textContent = "";
+
+            // Check if user exists in localStorage
+            let storedUser = JSON.parse(localStorage.getItem("user"));
+
+            if (!storedUser) {
+                alert("No user found! Please register first.");
+                window.location.href = "register.html";
+                return;
+            }
+  // Validate login credentials
+  if (username === storedUser.username && password === storedUser.password) {
+        // Redirect to the welcome page (or dashboard) directly
+        window.location.href = "./welcome.html"; // Ensure this page exists
+    } else {
+        // Show an error if credentials don't match
+        passwordError.textContent = "Incorrect username or password!";
+    }
+        });
+    </script>
+    <script>
+        // Language Translations
+        const translations = {
+            en: {
+                home: "Home",
+                shop: "Shop",
+                mens_fashion: "Men's Fashion",
+                womens_fashion: "Women's Fashion",
+                electronics: "Electronics",
+                accessories: "Accessories",
+                kids: "Kids",
+                brands: "Brands",
+                sales: "Sales",
+                about: "About Us",
+                contact: "Contact",
+                cart: "Cart",
+                search: "Search",
+                search_placeholder: "Search Products..."
+            },
+            ka: {
+                home: "მთავარი",
+                shop: "მაღაზია",
+                mens_fashion: "მამაკაცის მოდა",
+                womens_fashion: "ქალის მოდა",
+                electronics: "ელექტრონიკა",
+                accessories: "აქსესუარები",
+                kids: "ბავშვები",
+                brands: "ბრენდები",
+                sales: "ფასდაკლებები",
+                about: "ჩვენ შესახებ",
+                contact: "კონტაქტი",
+                cart: "კალათა",
+                search: "ძებნა",
+                search_placeholder: "პროდუქტის ძებნა..."
+            }
+        };
+    
+        // Change Language Function
+        function changeLanguage(lang) {
+            localStorage.setItem("selectedLang", lang);
+            applyLanguage(lang);
+        }
+    
+        // Apply Language on Page
+        function applyLanguage(lang) {
+            document.querySelectorAll("[data-lang]").forEach(element => {
+                const key = element.getAttribute("data-lang");
+                element.textContent = translations[lang][key];
+            });
+    
+            // Change input placeholder text
+            document.querySelectorAll("[data-lang-placeholder]").forEach(element => {
+                const key = element.getAttribute("data-lang-placeholder");
+                element.placeholder = translations[lang][key];
+            });
+        }
+    
+        // Load the Saved Language on Page Load
+        document.addEventListener("DOMContentLoaded", function() {
+            const savedLang = localStorage.getItem("selectedLang") || "en";
+            applyLanguage(savedLang);
+        });
+    </script>
+    
+
+    <!-- Footer Section -->
+    <footer>
+        <p>&copy; 2025 Tbilisi Trendz - All Rights Reserved</p>
+    </footer>
+</body>
+</html>

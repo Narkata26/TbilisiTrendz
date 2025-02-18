@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop - Tbilisi Trendz</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+    <!-- Header Section -->
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <a href="./welcome.html">Tbilisi Trendz</a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="./welcome.html">Home</a></li>
+                <li class="dropdown">
+                    <a href="./shop.html" class="dropbtn">Shop</a>
+                    <div class="dropdown-content">
+                        <a href="./mensfashion.html">Men's Fashion</a>
+                        <a href="./womensfashion.html">Women's Fashion</a>
+                        <a href="./electronics.html">Electronics</a>
+                        <a href="./accessories.html">Accessories</a>
+                        <a href="./kids.html">Kids</a>
+                    </div>
+                </li>
+                <li><a href="./Brands.html">Brands</a></li>
+                <li><a href="./Sales.html">Sales</a></li>
+                <li><a href="./aboutus.html">About Us</a></li>
+                <li><a href="./contact.html">Contact</a></li>
+                <li><a href="./cart.html">Cart <span id="cart-count">(0)</span></a></li>
+                <li>
+                    <button id="logout-btn" style="background: red; color: white; padding: 5px 10px; border: none; cursor: pointer;">
+                        Logout
+                    </button>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Check if the user is logged in
+            const loggedInUser = JSON.parse(localStorage.getItem("user"));
+    
+            if (!loggedInUser) {
+                window.location.href = "index.html"; // Redirect to login if not logged in
+            } else {
+                // Make sure the element exists before setting its text
+                const usernameDisplay = document.getElementById("username-display");
+                if (usernameDisplay) {
+                    usernameDisplay.textContent = "Hello, " + loggedInUser.username;
+                }
+            }
+    
+            // Logout functionality
+            const logoutButton = document.getElementById("logout-btn");
+            if (logoutButton) {
+                logoutButton.addEventListener("click", function () {
+                    localStorage.removeItem("user"); // Remove user session
+                    localStorage.removeItem("isLoggedIn"); // Remove login flag
+                    window.location.href = "index.html"; // Redirect to login page
+                });
+            }
+        });
+    </script>
+    
+    <body>
+        
+
+    <!-- Shop Page Content -->
+    <section class="shop-page">
+        <h2>Shop by Categories</h2>
+
+        <!-- Product List -->
+        <div class="product-list">
+            <div class="product-item">
+                <img src="https://via.placeholder.com/300x200" alt="Product Image">
+                <h3>Men's Jacket</h3>
+                <p>Comfortable and stylish jacket for all seasons.</p>
+                <span class="price">$50</span>
+                <a href="#" class="add-to-cart-btn" data-name="Men's Jacket" data-price="50" data-image="https://via.placeholder.com/300x200">Add to Cart</a>
+            </div>
+            <div class="product-item">
+                <img src="https://via.placeholder.com/300x200" alt="Product Image">
+                <h3>Women's Sneakers</h3>
+                <p>Fashionable sneakers for everyday use.</p>
+                <span class="price">$45</span>
+                <a href="#" class="add-to-cart-btn" data-name="Women's Sneakers" data-price="45" data-image="https://via.placeholder.com/300x200">Add to Cart</a>
+            </div>
+            <!-- Add more products here -->
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer>
+        <p>&copy; 2025 Tbilisi Trendz - All Rights Reserved</p>
+    </footer>
+
+    <script>
+        // Function to load the cart from localStorage and update the cart count in the navbar
+        function updateCartCount() {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            document.getElementById('cart-count').textContent = `(${cart.length})`;
+        }
+
+        // Function to add product to the cart
+        function addToCart(product) {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            cart.push(product);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartCount();
+        }
+
+        // Event listeners for all Add to Cart buttons
+        const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
+
+        addToCartButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const product = {
+                    name: this.dataset.name,
+                    price: this.dataset.price,
+                    image: this.dataset.image,
+                };
+                addToCart(product);
+            });
+        });
+
+        // Initialize the cart count on page load
+        updateCartCount();
+    </script>
+</body>
+</html>

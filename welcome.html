@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome - Tbilisi Trendz</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <a href="./welcome.html">Tbilisi Trendz</a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="./welcome.html">Home</a></li>
+                <li class="dropdown">
+                    <a href="./shop.html" class="dropbtn">Shop</a>
+                    <div class="dropdown-content">
+                        <a href="./mensfashion.html">Men's Fashion</a>
+                        <a href="./womensfashion.html">Women's Fashion</a>
+                        <a href="./electronics.html">Electronics</a>
+                        <a href="./accessories.html">Accessories</a>
+                        <a href="./kids.html">Kids</a>
+                    </div>
+                </li>
+                <li><a href="./Brands.html">Brands</a></li>
+                <li><a href="./Sales.html">Sales</a></li>
+                <li><a href="./aboutus.html">About Us</a></li>
+                <li><a href="./contact.html">Contact</a></li>
+                <li><a href="./cart.html">Cart <span id="cart-count">(0)</span></a></li>
+                <li>
+                    <button id="logout-btn" style="background: red; color: white; padding: 5px 10px; border: none; cursor: pointer;">
+                        Logout
+                    </button>
+                </li>
+            </ul>
+            <div class="search">
+                <input type="text" placeholder="Search Products...">
+                <button>Search</button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Banner Section -->
+    <section class="main-banner">
+        <div class="banner-content">
+            <h1>Explore the Latest Trends from Tbilisi</h1>
+            <p>Shop the best of fashion, electronics, and accessories with Georgian elegance</p>
+            <a href="./shop.html" class="cta-button">Start Shopping</a>
+        </div>
+    </section>
+
+    <!-- Featured Categories Section -->
+    <section class="categories">
+        <h2>Featured Categories</h2>
+        <div class="category-list">
+            <div class="category-item">
+                <img src="./imgs/4-o.jpg" alt="Men's Fashion">
+                <h3>Men's Fashion</h3>
+                <a href="./mensfashion.html">Shop Now</a>
+            </div>
+            <div class="category-item">
+                <img src="./imgs/bda6d663288d7e3361f1348c592025b2.jpg" alt="Women's Fashion">
+                <h3>Women's Fashion</h3>
+                <a href="./womensfashion.html">Shop Now</a>
+            </div>
+            <div class="category-item">
+                <img src="./imgs/technology-logo-digital-tech-logo-vector.jpg" alt="Electronics">
+                <h3>Electronics</h3>
+                <a href="./electronics.html">Shop Now</a>
+            </div>
+            <div class="category-item">
+                <img src="./imgs/a268e55f12c046325873596aa5e90ff6ec29aa6e-731x731.png" alt="Accessories">
+                <h3>Accessories</h3>
+                <a href="./accessories.html">Shop Now</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Brands Section -->
+    <section class="brands">
+        <h2>Shop by Brands</h2>
+        <div class="brand-list">
+            <div class="brand-item"><a href="#">Brand 1</a></div>
+            <div class="brand-item"><a href="#">Brand 2</a></div>
+            <div class="brand-item"><a href="#">Brand 3</a></div>
+            <div class="brand-item"><a href="#">Brand 4</a></div>
+            <div class="brand-item"><a href="#">Brand 5</a></div>
+        </div>
+    </section>
+
+    <!-- Welcome Section -->
+    <section class="welcome">
+        <h2>Welcome, <span id="username-display"></span>!</h2>
+        <p>Browse through our collection and enjoy shopping!</p>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Tbilisi Trendz - All Rights Reserved</p>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Check if user is logged in
+            const loggedInUser = JSON.parse(localStorage.getItem("user"));
+
+            if (!loggedInUser) {
+                window.location.href = "index.html"; // Redirect to login if not logged in
+            } else {
+                // Display the logged-in username
+                const usernameDisplay = document.getElementById("username-display");
+                if (usernameDisplay) {
+                    usernameDisplay.textContent = loggedInUser.username;
+                }
+            }
+
+            // Logout functionality
+            const logoutButton = document.getElementById("logout-btn");
+            if (logoutButton) {
+                logoutButton.addEventListener("click", function () {
+                    localStorage.removeItem("user"); // Remove user session
+                    window.location.href = "index.html"; // Redirect to login page
+                });
+            }
+        });
+    </script>
+
+</body>
+</html>
